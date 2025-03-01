@@ -13,7 +13,7 @@ on:
 # Define os jobs que serão executados
 jobs:
   build:
-    runs-on: ubuntu-latest # Sistema operacional para executar o job
+    runs-on: ubuntu-18.04 # Versão mais antiga do Ubuntu
 
     steps:
     # Passo 1: Fazer o checkout do código
