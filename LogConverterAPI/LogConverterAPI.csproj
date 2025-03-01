@@ -7,12 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Arquivos Teste\api-logs-transformar.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Controllers\LogsController.cs~RFc927c9.TMP" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="logs\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Arquivos Teste\api-logs-transformar.json" />
   </ItemGroup>
 
   <ItemGroup>

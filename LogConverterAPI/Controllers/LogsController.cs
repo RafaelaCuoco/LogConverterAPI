@@ -19,7 +19,7 @@ namespace LogConverterAPI.Controllers
         private readonly LogTransformerService _logTransformer;
         private string path = Path.Combine(Directory.GetCurrentDirectory(), 
             "logs", 
-            DateTime.Now.ToString("yyyy-MM"), 
+            DateTime.Now.ToString("yyyy"), 
             DateTime.Now.ToString("MM"));
 
         public LogsController(LogContext context, LogTransformerService logTransformer)
@@ -35,6 +35,10 @@ namespace LogConverterAPI.Controllers
         /// </summary>
         /// <param name="request">Os dados do log a serem transformados.</param>
         /// <returns>O log transformado no formato "Agora".</returns>
+        /// <response code="200">Retorna os logs Transformados com sucesso.</response>
+        /// <response code="400">Se os logs fornecidos forem inválidos.</response>
+        /// <response code="409">Retorna os logs ja existentes no banco.</response>
+        /// <response code="500">Retorna o erro em salvar os logs no banco.</response>
         [HttpPost("transformar")]
         public async Task<IActionResult> TransformarLog([FromBody] LogRequest request)
         {
@@ -47,7 +51,7 @@ namespace LogConverterAPI.Controllers
             // Transforma o log para o formato "Agora"
             var logTransformado = _logTransformer.TransformarLog(request.Conteudo);
             Uteis.Uteis.CriarDiretorioSeNaoExistir(path); // Garante que o diretório existe
-            var filePath = Path.Combine(path, $"{Guid.NewGuid()}.txt");
+            var filePath = Path.Combine(path, $"{Guid.NewGuid()}.log");
 
             // Salva o log transformado em um arquivo, se necessário
             if (request.SalvarNoServidor)
@@ -180,8 +184,10 @@ namespace LogConverterAPI.Controllers
         /// </summary>
         /// <param name="log">O objeto LogOriginal contendo os dados do log a ser salvo.</param>
         /// <returns>O objeto LogOriginal recém-criado, incluindo o ID gerado.</returns>
-        /// <response code="201">Retorna o log original criado com sucesso.</response>
-        /// <response code="400">Se o objeto LogOriginal fornecido for inválido.</response>
+        /// <response code="200">Retorna os logs originais criados com sucesso.</response>
+        /// <response code="400">Retorna o erro se os logs fornecidos forem inválidos.</response>
+        /// <response code="409">Retorna os logs ja existentes no banco.</response>
+        /// <response code="500">Retorna o erro em salvar os logs no banco.</response>
         [HttpPost("salvar")]
         public async Task<IActionResult> SalvarLog([FromBody] LogOriginalSalvar log)
         {
@@ -230,11 +236,5 @@ namespace LogConverterAPI.Controllers
                 return StatusCode(500, $"Erro ao salvar o log no banco de dados: {ex.Message}");
             }
         }
-    }
-
-    public class LogRequest
-    {
-        public string Conteudo { get; set; }
-        public bool SalvarNoServidor { get; set; }
     }
 }

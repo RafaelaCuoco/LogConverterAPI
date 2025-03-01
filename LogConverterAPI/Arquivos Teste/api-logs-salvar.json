@@ -1,0 +1,33 @@
+{
+  "conteudo": "
+400|500|ERROR|\"PUT /update-profile HTTP/1.1\"|500.0
+250|200|HIT|\"GET /index.html HTTP/1.1\"|80.5
+300|304|NOT_MODIFIED|\"GET /favicon.ico HTTP/1.1\"|20.1
+500|403|FORBIDDEN|\"DELETE /admin/users HTTP/1.1\"|120.7
+600|200|HIT|\"GET /api/v1/users HTTP/1.1\"|150.3
+700|401|UNAUTHORIZED|\"POST /login HTTP/1.1\"|90.8
+800|200|HIT|\"GET /dashboard HTTP/1.1\"|110.4
+900|400|BAD_REQUEST|\"PATCH /settings HTTP/1.1\"|75.2
+1000|200|HIT|\"GET /products HTTP/1.1\"|130.6
+1100|404|MISS|\"GET /unknown-page HTTP/1.1\"|145.9
+1200|200|INVALIDATE|\"GET /cache/clear HTTP/1.1\"|250.0
+1300|503|SERVICE_UNAVAILABLE|\"GET /health-check HTTP/1.1\"|300.5
+1400|200|HIT|\"GET /images/photo.jpg HTTP/1.1\"|60.2
+1500|404|MISS|\"GET /old-content HTTP/1.1\"|160.8
+1600|200|HIT|\"GET /new-content HTTP/1.1\"|170.3
+1700|403|FORBIDDEN|\"DELETE /files/secret.txt HTTP/1.1\"|180.4
+1800|200|HIT|\"GET /api/v2/data HTTP/1.1\"|190.7
+1900|401|UNAUTHORIZED|\"POST /secure/login HTTP/1.1\"|200.9
+2000|200|HIT|\"GET /static/styles.css HTTP/1.1\"|210.2
+2100|400|BAD_REQUEST|\"PUT /invalid-resource HTTP/1.1\"|220.5
+2200|200|HIT|\"GET /videos/video.mp4 HTTP/1.1\"|230.8
+2300|404|MISS|\"GET /missing-file HTTP/1.1\"|240.1
+2400|200|INVALIDATE|\"GET /cache/reset HTTP/1.1\"|250.3
+2500|500|ERROR|\"POST /submit-form HTTP/1.1\"|260.6
+2600|200|HIT|\"GET /home HTTP/1.1\"|270.9
+2700|403|FORBIDDEN|\"DELETE /admin/settings HTTP/1.1\"|280.2
+2800|200|HIT|\"GET /profile HTTP/1.1\"|290.5
+2900|401|UNAUTHORIZED|\"POST /private/auth HTTP/1.1\"|300.8
+3000|200|HIT|\"GET /api/v3/stats HTTP/1.1\"|310.1
+"
+}

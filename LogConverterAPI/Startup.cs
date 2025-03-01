@@ -27,7 +27,7 @@ namespace LogConverterAPI
             // Registrar o serviço LogTransformerService
             services.AddScoped<LogTransformerService>();
 
-            // Adiciona os controladores da API (usando AddMvc no .NET Core 2.1)
+            // Adiciona os controladores da API .NET Core 2.1
             services.AddMvc();
 
             // Configuração do Swagger
