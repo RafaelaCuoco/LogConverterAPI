@@ -1,0 +1,44 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: CI/CD Pipeline for .NET Project
+
+# Define quando o workflow será acionado
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+# Define os jobs que serão executados
+jobs:
+  build:
+    runs-on: ubuntu-latest # Sistema operacional para executar o job
+
+    steps:
+    # Passo 1: Fazer o checkout do código
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Passo 2: Configurar o SDK do .NET
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '2.1.x'
+
+    # Passo 3: Restaurar as dependências
+    - name: Restore dependencies
+      run: dotnet restore
+
+    # Passo 4: Compilar o projeto
+    - name: Build project
+      run: dotnet build --configuration Release --no-restore
+
+    # Passo 5: Executar os testes
+    - name: Run tests
+      run: dotnet test --no-build --verbosity normal
+
+    # Passo 6: Publicar o projeto (opcional)
+    - name: Publish project
+      if: github.ref == 'refs/heads/main' # Executa apenas na branch principal
+      run: dotnet publish -c Release -o ./publish
