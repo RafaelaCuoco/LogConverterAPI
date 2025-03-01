@@ -17,15 +17,17 @@ namespace LogConverterAPI.Controllers
     {
         private readonly LogContext _context;
         private readonly LogTransformerService _logTransformer;
+        private readonly ILogTransformer _ilogTransformer;
         private string path = Path.Combine(Directory.GetCurrentDirectory(), 
             "logs", 
             DateTime.Now.ToString("yyyy"), 
             DateTime.Now.ToString("MM"));
 
-        public LogsController(LogContext context, LogTransformerService logTransformer)
+        public LogsController(LogContext context, LogTransformerService logTransformer, ILogTransformer ilogTransformer)
         {
             _context = context;
             _logTransformer = logTransformer;
+            _ilogTransformer = ilogTransformer;
         }
 
         // POST api/logs/transformar
@@ -47,6 +49,10 @@ namespace LogConverterAPI.Controllers
             {
                 return BadRequest("O conteúdo do log é obrigatório.");
             }
+
+            var ilogTransformado = _ilogTransformer.TransformarLog(request.Conteudo);
+
+            return Ok(new { TransformedContent = ilogTransformado });
 
             // Transforma o log para o formato "Agora"
             var logTransformado = _logTransformer.TransformarLog(request.Conteudo);
