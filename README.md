@@ -105,5 +105,10 @@
         <h2>Licença</h2>
         <p>Este projeto está licenciado sob a <a href="https://opensource.org/licenses/MIT">MIT License</a>. Veja o arquivo <a href="LICENSE">LICENSE</a> para mais detalhes.</p>
     </div>
+    <div align="center">
+  📚 <a href="https://github.com/RafaelaCuoco/LogConverterAPI/wiki">Documentação</a> | 
+  🔗 <a href="https://github.com/RafaelaCuoco/LogConverterAPI">Repositório</a> | 
+  📧 <a href="mailto:rafaela.cuoco@gmail.com">Contato</a> 
+</div>
 </body>
 </html>
