@@ -12,6 +12,7 @@
         <ul>
             <li><a href="#descricao">Descrição</a></li>
             <li><a href="#instalacao">Instalação</a></li>
+            <li><a href="#banco">Configuração do Banco de Dados</a></li>
             <li><a href="#uso">Uso</a></li>
             <li><a href="#testes">Testes</a></li>
             <li><a href="#licenca">Licença</a></li>
@@ -42,6 +43,43 @@
             <li>Execute a aplicação:</li>
             <pre><code>dotnet run --project LogConverterAPI</code></pre>
         </ol>
+    </div>
+    <div class="section" id="banco">
+    <h2>Configuração do Banco de Dados</h2>
+    <h3>Passo 1: Configurar a String de Conexão</h3>
+    <p>Abra o arquivo <code>appsettings.json</code> no projeto <code>LogConverterAPI</code> e configure a string de conexão para o SQL Server:</p>
+    <pre><code class="json">{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=SEU_SERVIDOR;Database=LogConverterDB;User Id=SEU_USUARIO;Password=SUA_SENHA;TrustServerCertificate=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}</code></pre>
+    <blockquote>
+        <p>Substitua <code>SEU_SERVIDOR</code>, <code>SEU_USUARIO</code> e <code>SUA_SENHA</code> pelas suas credenciais do SQL Server.</p>
+    </blockquote>
+    <h3>Passo 2: Criar o Banco de Dados no SQL Server</h3>
+    <p>Em seu <strong>SQL Server Management Studio (SSMS)</strong> ou outra ferramenta de gerenciamento de banco de dados, crie o banco de dados vazio para que o Entity Framework possa popular as tabelas automaticamente:</p>
+    <pre><code class="sql">CREATE DATABASE LogConverterDB;</code></pre>
+    <h3>Passo 3: Aplicar Migrações com o Entity Framework Core</h3>
+    <p>Para criar as tabelas no banco de dados, execute as migrações do Entity Framework Core. Siga os passos abaixo:</p>
+    <ol>
+        <li>Abra um terminal na raiz do projeto <code>LogConverterAPI</code>.</li>
+        <li>Aplique as migrações ao banco de dados:</li>
+        <pre><code class="bash">dotnet ef database update</code></pre>
+    </ol>
+    <h3>Passo 4: Verificar a Conexão</h3>
+    <p>Para garantir que a aplicação está conectada corretamente ao banco de dados:</p>
+    <ol>
+        <li>Execute a aplicação usando o comando:</li>
+        <pre><code class="bash">dotnet run --project LogConverterAPI</code></pre>
+        <li>Verifique se o banco de dados foi criado e populado com as tabelas necessárias.</li>
+    </ol>
     </div>
     <div class="section" id="uso">
         <h2>Uso</h2>
