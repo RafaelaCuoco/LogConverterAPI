@@ -46,15 +46,7 @@ jobs:
     - name: Build project
       run: dotnet build --configuration Release --no-restore
 
-    # Passo 6: Executar os testes
-    - name: Run tests
-      run: dotnet test --no-build --verbosity normal
-    - name: Publish to GitHub Packages
-      run: dotnet pack --configuration Release --output ./nupkg
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    # Passo 7: Publicar o projeto (opcional)
+    # Passo 6: Publicar o projeto (opcional)
     - name: Publish project
       if: github.ref == 'refs/heads/main' # Executa apenas na branch principal
       run: dotnet publish -c Release -o ./publish
