@@ -13,20 +13,26 @@ on:
 # Define os jobs que serão executados
 jobs:
   build:
-    runs-on: ubuntu-18.04 # Versão mais antiga do Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
     # Passo 1: Fazer o checkout do código
     - name: Checkout code
       uses: actions/checkout@v3
+    
+    # Passo 2: Instalar OpenSSL (compatível com .NET Core 2.1)
+    - name: Install OpenSSL
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libssl1.1
 
-    # Passo 2: Configurar o SDK do .NET
+    # Passo 3: Configurar o SDK do .NET
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '2.1.x'
         
-    # Passo 3: Cache NuGets
+    # Passo 4: Cache NuGets
     - name: Cache NuGet packages
       uses: actions/cache@v3
       with:
@@ -39,11 +45,11 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    # Passo 5: Compilar o projeto
+    # Passo 6: Compilar o projeto
     - name: Build project
       run: dotnet build --configuration Release --no-restore
 
-    # Passo 6: Executar os testes
+    # Passo 7: Executar os testes
     - name: Run tests
       run: dotnet test --no-build --verbosity normal
     - name: Publish to GitHub Packages
@@ -51,7 +57,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # Passo 7: Publicar o projeto (opcional)
+    # Passo 8: Publicar o projeto (opcional)
     - name: Publish project
       if: github.ref == 'refs/heads/main' # Executa apenas na branch principal
       run: dotnet publish -c Release -o ./publish
