@@ -25,20 +25,33 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: '2.1.x'
-
-    # Passo 3: Restaurar as dependências
+        
+    # Passo 3: Cache NuGets
+    - name: Cache NuGet packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+    
+    # Passo 5: Restaurar as dependências
     - name: Restore dependencies
       run: dotnet restore
 
-    # Passo 4: Compilar o projeto
+    # Passo 5: Compilar o projeto
     - name: Build project
       run: dotnet build --configuration Release --no-restore
 
-    # Passo 5: Executar os testes
+    # Passo 6: Executar os testes
     - name: Run tests
       run: dotnet test --no-build --verbosity normal
+    - name: Publish to GitHub Packages
+      run: dotnet pack --configuration Release --output ./nupkg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # Passo 6: Publicar o projeto (opcional)
+    # Passo 7: Publicar o projeto (opcional)
     - name: Publish project
       if: github.ref == 'refs/heads/main' # Executa apenas na branch principal
       run: dotnet publish -c Release -o ./publish
